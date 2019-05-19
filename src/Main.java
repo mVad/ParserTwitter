@@ -3,8 +3,9 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws TwitterException, IOException, InterruptedException {
+    public static void main(String[] args) throws TwitterException{
 
-        Data start_parsing = new Data(814943028);
+        Data start_parsing = new Data("Україна");
+        start_parsing.getMessages();
     }
 }
