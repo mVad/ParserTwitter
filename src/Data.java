@@ -8,14 +8,15 @@ import java.util.*;
 
 class Data {
     private static final int TWEETS_PER_QUERY		= 100;
-    private static final int MAX_QUERIES            = 5;
+    private static final int MAX_QUERIES            = 10000000;
     private Twitter twitter;
+    private String[] vocabulary;
     private Query query;
 
     Data(String message, String[] vocab){
         twitter = Connection.getConnection();
         query = new Query(message);
-        String[] vocabulary = vocab;
+        vocabulary = vocab;
     }
 
     void getMessages() {
@@ -38,7 +39,12 @@ class Data {
                         if (maxID == -1 || s.getId() < maxID) {
                             maxID = s.getId();
                         }
-                        System.out.println("@" + s.getUser().getScreenName() + " : " + s.getText());
+                        for(String i : this.vocabulary){
+                            if (s.getText().contains(i)){
+                                telegramBot.send("Word " + i + " @" + s.getUser().getScreenName() + " : " + s.getText());
+                            }
+                            //System.out.println("@" + s.getUser().getScreenName() + " : " + s.getText());
+                        }
                     }
                 }
                 searchTweetsRateLimit = r.getRateLimitStatus();
